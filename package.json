@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --passWithNoTests",
-    "test:coverage": "jest --coverage --watchAll=false --passWithNoTests",
+    "test": "jest -watchAll",
+    "test:coverage": "jest --coverage --watchAll=false",
     "prepare": "husky install",
     "build": "tsc",
     "build:dev": "tsc -w",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "eslint": "^8.35.0",
@@ -37,6 +38,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^7.0.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "ts-jest": "^29.0.5"
   }
 }
