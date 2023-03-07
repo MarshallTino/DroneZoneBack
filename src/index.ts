@@ -1,4 +1,4 @@
-import "./loadEnv.js";
+import "./loadEnvironments.js";
 import startServer from "./server/startServer.js";
 import "./server/index.js";
 import connectDatabase from "./database/connectDatabase.js";

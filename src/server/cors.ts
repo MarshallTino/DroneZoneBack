@@ -1,5 +1,5 @@
 import type cors from "cors";
-import "../loadEnv.js";
+import "../loadEnvironments.js";
 
 const apiUrl = process.env.API_URL!;
 const port = process.env.PORT!;
