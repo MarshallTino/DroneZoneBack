@@ -58,7 +58,7 @@ describe("Given a POST at the '/user/login' endpoint", () => {
     });
   });
 
-  describe("When it receives a request with the email 'marshall@gmail.com' and password 'goodToKnow' that doesn't exist in the database", () => {
+  describe("When it receives a request with the email 'marshall@gmail.com' and password 'goodToKnow' that dont't exist in the database", () => {
     test("Then it should call its next method with a custom error", async () => {
       const expectedError = new CustomError(
         "The entered credentials are invalid",
