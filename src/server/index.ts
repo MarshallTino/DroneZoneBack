@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import { option } from "yargs";
+import option from "./cors.js";
 
 const app = express();
 
