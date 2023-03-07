@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest -watchAll",
+    "test": "jest",
     "test:coverage": "jest --coverage --watchAll=false",
     "prepare": "husky install",
     "build": "tsc",
