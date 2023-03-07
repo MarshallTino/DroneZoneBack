@@ -12,5 +12,6 @@ module.exports = {
     "!src/server/index.ts",
     "!src/database/connectDatabase.ts",
     "!src/server/cors.ts",
+    "!src/database/models/userSchema.ts",
   ],
 };
