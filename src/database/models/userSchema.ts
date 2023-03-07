@@ -7,10 +7,10 @@ const userSchema = new Schema({
     unique: true,
   },
   email: { type: String, required: true, unique: true },
-  password: { type: String, minLength: 10, required: true },
+  password: { type: String, minLength: 8, required: true },
   drones: [],
 });
 
-export const User = model("User", userSchema, "user");
+export const User = model("User", userSchema, "users");
 
 export default User;
