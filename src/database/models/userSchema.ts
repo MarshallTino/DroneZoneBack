@@ -11,6 +11,6 @@ const userSchema = new Schema({
   drones: [],
 });
 
-export const User = model("User", userSchema, "user");
+export const User = model("User", userSchema, "users");
 
 export default User;

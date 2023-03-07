@@ -1,12 +1,12 @@
 import "../../../loadEnvironments.js";
 import { type Request, type NextFunction, type Response } from "express";
-import User from "../../../database/models/userSchema";
+import User from "../../../database/models/userSchema.js";
 import { type UserCredentials } from "./types";
 import bcrypt from "bcryptjs";
-import CustomError from "../../../customError/CustomError";
+import CustomError from "../../../customError/CustomError.js";
 import jwt from "jsonwebtoken";
 
-export const loginController = async (
+export const login = async (
   req: Request<
     Record<string, unknown>,
     Record<string, unknown>,
@@ -29,11 +29,12 @@ export const loginController = async (
         "The entered credentials are invalid"
       );
       next(customError);
+      return;
     }
 
     const jwtPayload = {
       sub: user?._id,
-      email: user?.email,
+      email,
     };
 
     const token = jwt.sign(jwtPayload, process.env.JWT_SECRET!);
@@ -44,4 +45,4 @@ export const loginController = async (
   }
 };
 
-export default loginController;
+export default login;

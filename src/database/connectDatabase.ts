@@ -6,6 +6,7 @@ const createDebug = debug("dronezone-api:database");
 export const connectDatabase = async (url: string) => {
   mongoose.set("strictQuery", false);
   createDebug("Database conected");
+  mongoose.set("debug", true);
   await mongoose.connect(url);
   mongoose.set("toJSON", {
     virtuals: true,
