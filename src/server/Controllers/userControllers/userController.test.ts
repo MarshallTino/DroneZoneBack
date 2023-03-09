@@ -1,19 +1,16 @@
 import { type UserCredentials } from "./types";
-import { type Request, type Response } from "express";
+import { type NextFunction, type Request, type Response } from "express";
 import login from "./userControllers";
 import User from "../../../database/models/userSchema";
 import CustomError from "../../../customError/CustomError";
+import { type CustomRequest } from "../../../types";
 
+const req: Partial<Request> = {};
 const res: Partial<Response> = {
   status: jest.fn().mockReturnThis(),
   json: jest.fn(),
 };
-const req = {} as Request<
-  Record<string, unknown>,
-  Record<string, unknown>,
-  UserCredentials
->;
-const next = jest.fn();
+const next: NextFunction = jest.fn();
 
 export const mockedUser: UserCredentials = {
   email: "marcelmartino2053@gmail.com",
@@ -35,7 +32,7 @@ describe("Given a login controller", () => {
         exec: jest.fn().mockResolvedValue(undefined),
       }));
 
-      await login(req, res as Response, next);
+      await login(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedError);
     });
@@ -49,7 +46,7 @@ describe("Given a login controller", () => {
         exec: jest.fn().mockRejectedValue(error),
       }));
 
-      await login(req, res as Response, next);
+      await login(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(error);
     });
