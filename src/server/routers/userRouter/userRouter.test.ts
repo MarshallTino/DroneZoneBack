@@ -33,7 +33,7 @@ describe("Given a POST at the '/user/login' endpoint", () => {
     password: "MarshallTino",
   };
 
-  describe("When it receives a request with username 'marcelmartino2053@gmail.com' and password 'MarshallTino'", () => {
+  describe("When it receives a request with email 'marcelmartino2053@gmail.com' and password 'MarshallTino'", () => {
     test("Then it should respond with a status 200 and with an object in its body with a property 'token'", async () => {
       jwt.sign = jest.fn().mockImplementation(() => ({
         token: "ffiajdieinjggggggaaaawd",
@@ -58,10 +58,10 @@ describe("Given a POST at the '/user/login' endpoint", () => {
     });
   });
 
-  describe("When it receives a request with the email 'marshall@gmail.com' and password 'goodToKnow' that dont't exist in the database", () => {
+  describe("When it receives a request with the email 'marcelmartino2053@gmail.com' and password 'goodToKnow' that dont't exist in the database", () => {
     test("Then it should call its next method with a custom error", async () => {
       const expectedError = new CustomError(
-        "The entered credentials are invalid",
+        "No user found.",
         401,
         "The entered credentials are invalid"
       );
@@ -76,6 +76,34 @@ describe("Given a POST at the '/user/login' endpoint", () => {
         "error",
         expectedError.publicMessage
       );
+    });
+
+    describe("When it receives a request with the email 'marcelmartino2053@gmail.com' and password 'goodToKnow' that dont't exist in the database", () => {
+      test("Then it should call its next method with a custom error", async () => {
+        await User.create({
+          ...mockUser,
+          password: "goodToKnow",
+          username: "Marshall",
+          email: "marcelmartino2053@gmail.com",
+        });
+
+        const expectedError = new CustomError(
+          "The password is incorrect.",
+          401,
+          "The entered credentials are invalid"
+        );
+        const expectedStatus = 401;
+
+        const response = await request(app)
+          .post(loginRoute)
+          .send(mockUser)
+          .expect(expectedStatus);
+
+        expect(response.body).toHaveProperty(
+          "error",
+          expectedError.publicMessage
+        );
+      });
     });
   });
 });

@@ -22,9 +22,19 @@ export const login = async (
   try {
     const user = await User.findOne({ email: userToFind }).exec();
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user) {
       const customError = new CustomError(
-        "The entered credentials are invalid",
+        "No user found.",
+        401,
+        "The entered credentials are invalid"
+      );
+      next(customError);
+      return;
+    }
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      const customError = new CustomError(
+        "The password is incorrect.",
         401,
         "The entered credentials are invalid"
       );

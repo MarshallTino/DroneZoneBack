@@ -19,9 +19,9 @@ export const mockedUser: UserCredentials = {
 
 describe("Given a login controller", () => {
   describe("When it receives a request with the email 'marcelmartino2053@gmail.com' and the password 'MarshallTino' and the email is not in the database", () => {
-    test("Then it should call its next method with status 401 and the message 'The entered credentials are invalid'", async () => {
+    test("Then it should call its next method with status 401 and the message 'No user found.'", async () => {
       const expectedError = new CustomError(
-        "The entered credentials are invalid",
+        "No user found.",
         401,
         "The entered credentials are invalid"
       );
