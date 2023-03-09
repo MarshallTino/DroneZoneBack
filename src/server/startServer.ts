@@ -1,12 +1,24 @@
-import app from "./index.js";
 import createDebug from "debug";
+import { type Express } from "express";
+import type CustomError from "../customError/CustomError.js";
 
 const debug = createDebug("dronezone-api:server");
 
-const startServer = (port: number) => {
-  debug(`Server started at http://localhost:${port}`);
+const startServer = async (port: number, app: Express) =>
+  new Promise((resolve, reject) => {
+    const server = app.listen(port, () => {
+      resolve(server);
+    });
 
-  app.listen(port);
-};
+    server.on("error", (error: CustomError) => {
+      const errorMessage = "Error on starting the server";
+
+      if (error.code === "EADDRINUSE") {
+        debug(errorMessage, `The port  ${port} is already in use`);
+      }
+
+      reject(new Error(errorMessage));
+    });
+  });
 
 export default startServer;
