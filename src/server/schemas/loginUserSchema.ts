@@ -4,7 +4,6 @@ const loginUserSchema = {
   body: Joi.object({
     email: Joi.string().required(),
     password: Joi.string().min(8).required(),
-    username: Joi.string(),
   }),
 };
 
