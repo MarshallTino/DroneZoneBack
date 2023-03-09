@@ -7,4 +7,4 @@ const mongoDbUrl = process.env.MONGODB_URL!;
 const port = process.env.PORT ?? 4000;
 
 await connectDatabase(mongoDbUrl);
-startServer(+port);
+await startServer(+port);
