@@ -1,10 +1,10 @@
 import "../../../loadEnvironments.js";
 import { type Request, type NextFunction, type Response } from "express";
 import User from "../../../database/models/userSchema.js";
-import { type RegisterUserCredentials, type UserCredentials } from "./types";
 import bcrypt from "bcryptjs";
 import CustomError from "../../../customError/CustomError.js";
 import jwt from "jsonwebtoken";
+import { type RegisterUserCredentials, type UserCredentials } from "./types.js";
 
 export const login = async (
   req: Request<
@@ -28,8 +28,7 @@ export const login = async (
         401,
         "The entered credentials are invalid"
       );
-      next(customError);
-      return;
+      throw customError;
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
@@ -38,8 +37,7 @@ export const login = async (
         401,
         "The entered credentials are invalid"
       );
-      next(customError);
-      return;
+      throw customError;
     }
 
     const jwtPayload = {

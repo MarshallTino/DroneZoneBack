@@ -3,7 +3,7 @@ import { validate } from "express-validation";
 import {
   login,
   register,
-} from "../../Controllers/userControllers/userControllers.js";
+} from "../../controllers/userControllers/userControllers.js";
 import loginUserSchema from "../../schemas/loginUserSchema.js";
 import registerUserSchema from "../../schemas/registerUserSchema.js";
 

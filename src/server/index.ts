@@ -2,11 +2,12 @@ import option from "./cors.js";
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
-import {
-  notFoundError,
-  generalError,
-} from "../middlewares/errorMiddleware/errorMiddleware.js";
+
 import userRouter from "./routers/userRouter/userRouter.js";
+import {
+  generalError,
+  notFoundError,
+} from "./middlewares/errorMiddleware/errorMiddleware.js";
 
 const app = express();
 

@@ -1,6 +1,5 @@
 import { type NextFunction, type Request, type Response } from "express";
-import CustomError from "../../customError/CustomError";
-import { type CustomRequest } from "../../types";
+import CustomError from "../../../customError/CustomError";
 import { generalError, notFoundError } from "./errorMiddleware";
 
 const req: Partial<Request> = {};
