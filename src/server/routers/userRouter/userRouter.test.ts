@@ -1,7 +1,10 @@
 import connectDatabase from "../../../database/connectDatabase";
 import User from "../../../database/models/userSchema";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import { type UserCredentials } from "../../Controllers/userControllers/types";
+import {
+  type RegisterUserCredentials,
+  type UserCredentials,
+} from "../../Controllers/userControllers/types";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import request from "supertest";
@@ -104,6 +107,72 @@ describe("Given a POST at the '/user/login' endpoint", () => {
           expectedError.publicMessage
         );
       });
+    });
+  });
+});
+
+describe("Given a POST at the '/user/register' endpoint", () => {
+  const loginRoute = "/user/register";
+  const mockUser: RegisterUserCredentials = {
+    email: "marcel@gmail.com",
+    password: "marcelmartino",
+    username: "Hellothere",
+  };
+
+  describe("When it receives a request with email 'marcel@gmail.com' and password 'marcelmartino' and the username 'Hellothere'", () => {
+    test("Then it should respond with a status 201 and with an object in its body with a property 'user'", async () => {
+      jwt.sign = jest.fn().mockImplementation(() => ({
+        token: "ffiajdieinjggggggaaaawd",
+      }));
+
+      const expectedStatus = 201;
+
+      const response = await request(app)
+        .post(loginRoute)
+        .send(mockUser)
+        .expect(expectedStatus);
+
+      expect(response.body).toBe("The user has been created");
+    });
+  });
+
+  describe("When it receives a request with email 'marcel@gmail.com' that already exists and password 'marcelmartino' and the username 'Hellothere'", () => {
+    test("Then it should respond with a status 409 and with an object in its body with a property 'user'", async () => {
+      await User.create({
+        ...mockUser,
+        password: "marcelmartino",
+        username: "Hellothere",
+        email: "marcel@gmail.com",
+      });
+
+      const expectedStatus = 409;
+
+      const response = await request(app)
+        .post(loginRoute)
+        .send(mockUser)
+        .expect(expectedStatus);
+
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("When it receives a request with email 'marcel@gmail.com' and password 'marcelmartino' and the username that already exists 'Hellothere'", () => {
+    test("Then it should respond with a status 409 and with an object in its body with a property 'error'", async () => {
+      await User.create({
+        ...mockUser,
+        password: "marcelmartino",
+        username: "Hellothere",
+        email: "marcelus@gmail.com",
+      });
+
+      const expectedStatus = 409;
+
+      const response = await request(app)
+        .post(loginRoute)
+        .send(mockUser)
+        .expect(expectedStatus);
+
+      expect(response.body).toHaveProperty("error");
     });
   });
 });
