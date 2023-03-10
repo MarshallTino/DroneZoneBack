@@ -2,9 +2,9 @@ import { type RegisterUserCredentials, type UserCredentials } from "./types";
 import { type NextFunction, type Request, type Response } from "express";
 import User from "../../../database/models/userSchema";
 import CustomError from "../../../customError/CustomError";
-import { type RegisterCustomRequest, type CustomRequest } from "../../../types";
-import { login, register } from "./userControllers.js";
 import bcrypt from "bcryptjs";
+import { login, register } from "./userControllers";
+import { type CustomRequest, type RegisterCustomRequest } from "../../../types";
 
 beforeEach(() => {
   jest.clearAllMocks();

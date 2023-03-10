@@ -2,7 +2,7 @@ import { type Request } from "express";
 import {
   type RegisterUserCredentials,
   type UserCredentials,
-} from "./server/Controllers/userControllers/types";
+} from "./server/controllers/userControllers/types";
 
 export type CustomRequest = Request<
   Record<string, unknown>,

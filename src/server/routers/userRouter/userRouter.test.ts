@@ -1,16 +1,17 @@
 import connectDatabase from "../../../database/connectDatabase";
 import User from "../../../database/models/userSchema";
 import { MongoMemoryServer } from "mongodb-memory-server";
-import {
-  type RegisterUserCredentials,
-  type UserCredentials,
-} from "../../Controllers/userControllers/types";
+
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import request from "supertest";
 import app from "../..";
 import CustomError from "../../../customError/CustomError";
 import mongoose from "mongoose";
+import {
+  type RegisterUserCredentials,
+  type UserCredentials,
+} from "../../controllers/userControllers/types";
 let mongodbServer: MongoMemoryServer;
 
 beforeAll(async () => {
