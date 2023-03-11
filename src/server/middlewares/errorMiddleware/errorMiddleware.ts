@@ -1,6 +1,6 @@
 import { type NextFunction, type Request, type Response } from "express";
 import createDebug from "debug";
-import CustomError from "../../../customError/CustomError";
+import CustomError from "../../../customError/CustomError.js";
 const debug = createDebug("dronezone-api:middlewares");
 
 export const generalError = (
