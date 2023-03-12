@@ -8,7 +8,7 @@ export const getDrones = async (
   next: NextFunction
 ) => {
   try {
-    const drones = await Drone.find();
+    const drones = await Drone.find().exec();
 
     res.status(200).json({ drones });
   } catch (error) {
