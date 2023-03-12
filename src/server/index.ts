@@ -8,6 +8,7 @@ import {
   generalError,
   notFoundError,
 } from "./middlewares/errorMiddleware/errorMiddleware.js";
+import dronesRouter from "./routers/dronesRouter/dronesRouter.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use("/user", userRouter);
+app.use("/drones", dronesRouter);
 app.use(notFoundError);
 app.use(generalError);
 
