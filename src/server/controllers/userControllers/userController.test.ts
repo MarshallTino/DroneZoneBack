@@ -71,16 +71,20 @@ describe("Given a registerUser controller", () => {
   };
   const next: Partial<NextFunction> = jest.fn();
 
-  describe("When it receives a request with email 'alex@gmail.com', username 'Alex and password 'admin1234'", () => {
+  describe("When it receives a request with email 'marshall@.com', username 'marshall and password 'marcha'", () => {
     test("Then it should call its status method with code 201 and its json method with the created user", async () => {
+      const mockCreateUser: RegisterUserCredentials = {
+        username: "aaaaa",
+        email: "marshall@.com",
+        password: "marcsdasdsdaha",
+      };
+
       const expectedStatusCode = 201;
       const expectedBodyResponse = "The user has been created";
 
-      const mockCreateUser: RegisterUserCredentials = {
-        username: "Alex",
-        email: "alex@gmail.com",
-        password: "admin1234",
-      };
+      User.findOne = jest.fn().mockImplementation(() => ({
+        exec: jest.fn().mockReturnValue(undefined),
+      }));
 
       req.body = mockCreateUser;
 
@@ -100,9 +104,15 @@ describe("Given a registerUser controller", () => {
 
   describe("When the token or database or another error is thrown", () => {
     test("Then it should call its next method passing that error", async () => {
-      const errorMessage = "Internal server error";
+      const mockCreateUser: RegisterUserCredentials = {
+        username: "aaaaa",
+        email: "marshall@.com",
+        password: "marcsdasdsdaha",
+      };
 
-      User.findOne = jest.fn().mockImplementationOnce(() => {
+      const errorMessage = "Internal server error";
+      req.body = mockCreateUser;
+      User.findOne = jest.fn().mockImplementation(() => {
         throw new Error(errorMessage);
       });
 

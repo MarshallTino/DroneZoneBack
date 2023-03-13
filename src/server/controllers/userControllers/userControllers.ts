@@ -65,9 +65,8 @@ export const register = async (
   try {
     const { password, email, username } = req.body;
 
-    const emailToFind = await User.findOne({ email });
-    const usernameToFind = await User.findOne({ username });
-
+    const emailToFind = await User.findOne({ email }).exec();
+    const usernameToFind = await User.findOne({ username }).exec();
     if (emailToFind) {
       const customError = new CustomError(
         "The email already exists.",
