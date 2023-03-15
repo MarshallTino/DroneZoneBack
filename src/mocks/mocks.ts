@@ -1,8 +1,11 @@
-export const mockDrones = [
+import { type DroneStructure } from "../types";
+
+export const mockDrones: DroneStructure[] = [
   {
+    id: "",
     droneImage: "https://example.com/drone-image.jpg",
     schemaImage: "https://example.com/drone-schema.jpg",
-    creator: "John Doe",
+    creator: "",
     categories: {
       difficulty: "Intermediate",
       transmissionType: "Digital",

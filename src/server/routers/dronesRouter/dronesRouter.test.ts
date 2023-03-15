@@ -28,10 +28,6 @@ describe("Given a dronesRouter", () => {
   const getDronesEndpoint = "/drones/";
 
   describe("When it receives a get request at the endpoint '/drones'", () => {
-    beforeAll(async () => {
-      await Drone.insertMany(mockDrones);
-    });
-
     test("Then it should respond with a property drones", async () => {
       const response = await request(app).get(getDronesEndpoint);
 
