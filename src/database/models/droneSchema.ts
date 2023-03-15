@@ -4,7 +4,7 @@ import DroneComponentSchema from "./droneComponentSchema.js";
 const DroneSchema = new Schema({
   droneImage: { type: String, required: true },
   schemaImage: { type: String, required: true },
-  creator: { type: String, required: true },
+  creator: { type: Schema.Types.ObjectId, ref: "User" },
   categories: {
     difficulty: { type: String, required: true },
     transmissionType: { type: String, required: true },
