@@ -2,7 +2,7 @@ import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../customError/CustomError";
 import { Drone } from "../../../database/models/droneSchema";
 import { mockDrones } from "../../../mocks/mocks";
-import { deleteDrones, getDrones, getUserDrones } from "./dronesController";
+import { deleteDrone, getDrones, getUserDrones } from "./dronesController";
 import { type CustomRequest } from "./types";
 
 beforeEach(() => {
@@ -128,7 +128,7 @@ describe("GIven a deleteDrones", () => {
         exec: jest.fn().mockReturnValue(mockDrones),
       }));
 
-      await deleteDrones(req as CustomRequest, res as Response, next);
+      await deleteDrone(req as CustomRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -153,7 +153,7 @@ describe("GIven a deleteDrones", () => {
 
       Drone.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
 
-      await deleteDrones(req as CustomRequest, res as Response, next);
+      await deleteDrone(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedCustomError);
     });

@@ -42,7 +42,7 @@ export const getUserDrones = async (
   }
 };
 
-export const deleteDrones = async (
+export const deleteDrone = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction

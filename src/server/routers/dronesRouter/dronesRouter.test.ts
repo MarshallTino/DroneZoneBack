@@ -25,11 +25,11 @@ afterEach(async () => {
 });
 
 describe("Given a dronesRouter", () => {
-  const getDronesEndpoint = "/drones/";
+  const dronesEndpoint = "/drones/";
 
   describe("When it receives a get request at the endpoint '/drones'", () => {
     test("Then it should respond with a property drones", async () => {
-      const response = await request(app).get(getDronesEndpoint);
+      const response = await request(app).get(dronesEndpoint);
 
       expect(response.body).toHaveProperty("drones");
     });
@@ -37,7 +37,7 @@ describe("Given a dronesRouter", () => {
     test("Then it should respond with a status 200 response", async () => {
       const expectedStatusResponse = 200;
 
-      await request(app).get(getDronesEndpoint).expect(expectedStatusResponse);
+      await request(app).get(dronesEndpoint).expect(expectedStatusResponse);
     });
   });
 });

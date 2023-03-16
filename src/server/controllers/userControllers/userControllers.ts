@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import CustomError from "../../../customError/CustomError.js";
 import jwt from "jsonwebtoken";
 import { type RegisterUserCredentials, type UserCredentials } from "./types.js";
+import { type CustomJwtPayload } from "../../middlewares/auth/types.js";
 
 export const login = async (
   req: Request<
@@ -40,8 +41,8 @@ export const login = async (
       throw customError;
     }
 
-    const jwtPayload = {
-      sub: user?._id,
+    const jwtPayload: CustomJwtPayload = {
+      sub: user._id.toString(),
       email,
     };
 
