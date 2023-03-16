@@ -6,7 +6,7 @@ import { type CustomJwtPayload } from "./types.js";
 
 const auth = (req: CustomRequest, res: Response, next: NextFunction) => {
   try {
-    const authHeader = req.header("Authoriation");
+    const authHeader = req.header("Authorization");
 
     if (!authHeader) {
       throw new Error("No authorization header was provided");

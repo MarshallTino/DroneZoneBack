@@ -41,3 +41,27 @@ export const getUserDrones = async (
     next(customError);
   }
 };
+
+export const deleteDrones = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { droneId } = req.params;
+    const drone = await Drone.findByIdAndDelete({
+      _id: droneId,
+      creator: req.creator,
+    }).exec();
+
+    res.status(200).json({ drone });
+  } catch (error) {
+    const customError = new CustomError(
+      "Server Error. Something went wrong.",
+      500,
+      "The drone could't be deleted"
+    );
+
+    next(customError);
+  }
+};

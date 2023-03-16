@@ -1,7 +1,8 @@
 import { type NextFunction, type Request, type Response } from "express";
+import CustomError from "../../../customError/CustomError";
 import { Drone } from "../../../database/models/droneSchema";
 import { mockDrones } from "../../../mocks/mocks";
-import { getDrones, getUserDrones } from "./dronesController";
+import { deleteDrones, getDrones, getUserDrones } from "./dronesController";
 import { type CustomRequest } from "./types";
 
 beforeEach(() => {
@@ -104,6 +105,57 @@ describe("Given a get at the getUserDrones controller", () => {
       await getUserDrones(req as CustomRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+});
+
+describe("GIven a deleteDrones", () => {
+  describe("When it is called passed the id '640e06232ed91d22dbe61b76'", () => {
+    test("Then it should respond with a status code 200", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue("640e06232ed91d22dbe61b76"),
+      };
+
+      const req: Partial<CustomRequest> = {
+        params: { id: "640e06232ed91d22dbe61b76" },
+      };
+
+      const next = jest.fn();
+      const expectedStatusCode = 200;
+
+      Drone.findByIdAndDelete = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockDrones),
+      }));
+
+      await deleteDrones(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
+    });
+  });
+
+  describe("When it has a bad request", () => {
+    test("Then it should call its next function passing the custom error", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+
+      const req: Partial<CustomRequest> = {};
+
+      const expectedCustomError = new CustomError(
+        "Server Error. Something went wrong.",
+        500,
+        "The drone could't be deleted"
+      );
+
+      const next = jest.fn();
+
+      Drone.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
+
+      await deleteDrones(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedCustomError);
     });
   });
 });
