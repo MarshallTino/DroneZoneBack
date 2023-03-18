@@ -3,9 +3,7 @@ import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import app from "../..";
 import connectDatabase from "../../../database/connectDatabase";
-import { Drone } from "../../../database/models/droneSchema";
 import User from "../../../database/models/userSchema";
-import { mockDrones } from "../../../mocks/mocks";
 let mongodbServer: MongoMemoryServer;
 
 beforeAll(async () => {
