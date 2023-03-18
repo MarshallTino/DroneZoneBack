@@ -1,9 +1,18 @@
 import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../customError/CustomError";
 import { Drone } from "../../../database/models/droneSchema";
-import { mockDrones } from "../../../mocks/mocks";
-import { type CreatorRequest, type CustomRequest } from "../../../types";
-import { deleteDrone, getDrones, getUserDrones } from "./dronesController";
+import { mockDroneCreate, mockDrones } from "../../../mocks/mocks";
+import {
+  type CustomRequestCreateDrone,
+  type CreatorRequest,
+  type CustomRequest,
+} from "../../../types";
+import {
+  createDrone,
+  deleteDrone,
+  getDrones,
+  getUserDrones,
+} from "./dronesController";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -134,7 +143,7 @@ describe("GIven a deleteDrones", () => {
     });
   });
 
-  describe("When it has a bad request", () => {
+  describe("When it has a receives request", () => {
     test("Then it should call its next function passing the custom error", async () => {
       const res: Partial<Response> = {
         status: jest.fn().mockReturnThis(),
@@ -153,6 +162,48 @@ describe("GIven a deleteDrones", () => {
       Drone.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
 
       await deleteDrone(req as CreatorRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(expectedCustomError);
+    });
+  });
+});
+
+describe("Given a createDrone controller", () => {
+  describe("When it receives a request with droneData and images", () => {
+    test("Then it should call ist status code 200", async () => {
+      const req: Partial<CustomRequestCreateDrone> = { body: mockDroneCreate };
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue(mockDroneCreate),
+      };
+      const next = jest.fn();
+      const expectedStatus = 201;
+      Drone.create = jest.fn().mockReturnValueOnce(mockDroneCreate);
+
+      await createDrone(req as CustomRequestCreateDrone, res as Response, next);
+      expect(res.status).toHaveBeenCalledWith(expectedStatus);
+    });
+  });
+
+  describe("When it has a receives request", () => {
+    test("Then it should call its next function passing the custom error", async () => {
+      const res: Partial<Response> = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockResolvedValue({}),
+      };
+      const req: Partial<CustomRequestCreateDrone> = {};
+
+      const expectedCustomError = new CustomError(
+        "Cannot read properties of undefined (reading 'droneImage')",
+        409,
+        "Couldn't create the drone"
+      );
+
+      const next = jest.fn();
+
+      Drone.create = jest.fn().mockRejectedValue(undefined);
+
+      await createDrone(req as CustomRequestCreateDrone, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedCustomError);
     });
