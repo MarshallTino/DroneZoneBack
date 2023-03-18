@@ -1,5 +1,6 @@
 import multer from "multer";
 import { Router } from "express";
+import crypto from "crypto";
 import {
   createDrone,
   deleteDrone,
@@ -24,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5000000,
+    fileSize: 6000000,
   },
 });
 

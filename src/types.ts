@@ -116,22 +116,6 @@ export interface CustomRequestCreateDrone extends CustomRequest {
   ];
 }
 
-export interface CustomRequestCreateDroneFiles extends CustomRequest {
-  files: [
-    droneImage: Express.Multer.File,
-    schemaImage: Express.Multer.File,
-    motorImage: Express.Multer.File,
-    frameImage: Express.Multer.File,
-    escImage: Express.Multer.File,
-    cameraImage: Express.Multer.File,
-    vtxImage: Express.Multer.File,
-    propellerImage: Express.Multer.File,
-    controllerImage: Express.Multer.File,
-    batteryImage: Express.Multer.File,
-    vtxAntennaImage: Express.Multer.File,
-    receiverImage: Express.Multer.File
-  ];
-}
 export interface DroneStructure extends DroneStructureCreate {
   id: string;
 }

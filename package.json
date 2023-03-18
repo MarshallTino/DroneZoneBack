@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "test:coverage": "jest --coverage --watchAll=false",
     "prepare": "husky install",
     "build": "tsc",
     "build:dev": "tsc -w",
     "start": "node dist",
-    "test:dev": "jest --watchAll"
+    "test:dev": "jest --watchAll",
+    "test:unit": "jest --config=jest.config.cjs",
+    "test:integration": "jest --config=jest.integration.config.cjs",
+    "test:coverage": "npm run test:unit -- --coverage --watchAll=false && npm run test:integration -- --coverage --watchAll=false"
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { type DroneStructure } from "../types";
 
 export const mockDrones: DroneStructure[] = [

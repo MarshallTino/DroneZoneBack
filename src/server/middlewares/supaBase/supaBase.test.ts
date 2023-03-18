@@ -1,8 +1,6 @@
 import { type NextFunction, type Response } from "express";
-import path from "path";
 import fs from "fs/promises";
 import { Drone } from "../../../database/models/droneSchema";
-import { mockDroneCreate } from "../../../mocks/mocks";
 import {
   type CustomRequest,
   type CustomRequestCreateDrone,
