@@ -4,7 +4,7 @@ import User from "../../../database/models/userSchema";
 import CustomError from "../../../customError/CustomError";
 import bcrypt from "bcryptjs";
 import { login, register } from "./userControllers";
-import { type CustomRequest, type RegisterCustomRequest } from "../../../types";
+import { type CustomRequest } from "../../../types";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -92,7 +92,7 @@ describe("Given a registerUser controller", () => {
       User.create = jest.fn().mockResolvedValue(mockCreateUser);
 
       await register(
-        req as RegisterCustomRequest,
+        req as CustomRequest,
         res as Response,
         next as NextFunction
       );
@@ -122,7 +122,7 @@ describe("Given a registerUser controller", () => {
         "Couldn't create the user"
       );
       await register(
-        req as RegisterCustomRequest,
+        req as CustomRequest,
         res as Response,
         next as NextFunction
       );
