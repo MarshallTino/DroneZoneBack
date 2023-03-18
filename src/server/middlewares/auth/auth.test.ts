@@ -2,7 +2,7 @@ import { type Request, type NextFunction, type Response } from "express";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import CustomError from "../../../customError/CustomError.js";
-import { type CustomRequest } from "../../controllers/dronesController/types.js";
+import { type CreatorRequest, type CustomRequest } from "../../../types.js";
 import auth from "./auth.js";
 
 const next: NextFunction = jest.fn();
@@ -23,7 +23,7 @@ describe("Given an auth middleware", () => {
 
       jwt.verify = jest.fn().mockReturnValueOnce({});
 
-      auth(req as CustomRequest, res as Response, next);
+      auth(req as CreatorRequest, res as Response, next);
       expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
@@ -42,7 +42,7 @@ describe("Given an auth middleware", () => {
 
       jwt.verify = jest.fn().mockReturnValueOnce({});
 
-      auth(req as CustomRequest, res as Response, next);
+      auth(req as CreatorRequest, res as Response, next);
       expect(next).toHaveBeenCalledWith(expectedError);
     });
   });
@@ -59,7 +59,7 @@ describe("Given an auth middleware", () => {
       const creator = new mongoose.Types.ObjectId();
       jwt.verify = jest.fn().mockReturnValueOnce({ sub: creator });
 
-      auth(req as CustomRequest, res as Response, next);
+      auth(req as CreatorRequest, res as Response, next);
 
       expect(next).toHaveBeenCalled();
       expect(req).toHaveProperty("creator", creator);

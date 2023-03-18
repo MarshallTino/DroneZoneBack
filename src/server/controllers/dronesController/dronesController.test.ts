@@ -2,8 +2,8 @@ import { type NextFunction, type Request, type Response } from "express";
 import CustomError from "../../../customError/CustomError";
 import { Drone } from "../../../database/models/droneSchema";
 import { mockDrones } from "../../../mocks/mocks";
+import { type CreatorRequest, type CustomRequest } from "../../../types";
 import { deleteDrone, getDrones, getUserDrones } from "./dronesController";
-import { type CustomRequest } from "./types";
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -71,7 +71,7 @@ describe("Given a get at the getUserDrones controller", () => {
         exec: jest.fn().mockReturnValue({ creator: "243423djjj2i2k3444" }),
       }));
 
-      await getUserDrones(req as CustomRequest, res as Response, next);
+      await getUserDrones(req as CreatorRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
     });
@@ -88,7 +88,7 @@ describe("Given a get at the getUserDrones controller", () => {
         exec: jest.fn().mockReturnValue(mockDrones),
       }));
 
-      await getUserDrones(req as CustomRequest, res as Response, next);
+      await getUserDrones(req as CreatorRequest, res as Response, next);
 
       expect(res.json).toHaveBeenCalledWith({ userDrones: mockDrones });
     });
@@ -102,7 +102,7 @@ describe("Given a get at the getUserDrones controller", () => {
         throw new Error("Bad request");
       });
 
-      await getUserDrones(req as CustomRequest, res as Response, next);
+      await getUserDrones(req as CreatorRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(error);
     });
@@ -128,7 +128,7 @@ describe("GIven a deleteDrones", () => {
         exec: jest.fn().mockReturnValue(mockDrones),
       }));
 
-      await deleteDrone(req as CustomRequest, res as Response, next);
+      await deleteDrone(req as CreatorRequest, res as Response, next);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatusCode);
     });
@@ -140,7 +140,6 @@ describe("GIven a deleteDrones", () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn().mockResolvedValue({}),
       };
-
       const req: Partial<CustomRequest> = {};
 
       const expectedCustomError = new CustomError(
@@ -153,7 +152,7 @@ describe("GIven a deleteDrones", () => {
 
       Drone.findByIdAndDelete = jest.fn().mockReturnValue(undefined);
 
-      await deleteDrone(req as CustomRequest, res as Response, next);
+      await deleteDrone(req as CreatorRequest, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedCustomError);
     });

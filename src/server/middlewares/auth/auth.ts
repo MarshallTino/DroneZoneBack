@@ -1,10 +1,10 @@
 import { type NextFunction, type Response } from "express";
 import jwt from "jsonwebtoken";
 import CustomError from "../../../customError/CustomError.js";
-import { type CustomRequest } from "../../controllers/dronesController/types.js";
+import { type CreatorRequest } from "../../../types.js";
 import { type CustomJwtPayload } from "./types.js";
 
-const auth = (req: CustomRequest, res: Response, next: NextFunction) => {
+const auth = (req: CreatorRequest, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.header("Authorization");
 
