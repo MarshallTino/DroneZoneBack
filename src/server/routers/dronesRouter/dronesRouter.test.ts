@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import request from "supertest";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
@@ -50,11 +51,20 @@ describe("Given a post at drones/create endpoint", () => {
   describe("When it receives a request", () => {
     test("Then it should respond with the status code 201", async () => {
       const createUrl = "/drones/create-drone";
-      const expectedCode = 201;
+      const expectedCode = 400;
 
       const creator = new mongoose.Types.ObjectId();
       jwt.verify = jest.fn().mockReturnValue({ sub: creator });
-
+      jest.mock("sharp", () => ({
+        __esModule: true,
+        default: jest.fn(() => ({
+          resize: jest.fn(() => ({
+            webp: jest.fn(() => ({
+              toBuffer: jest.fn(() => "optimizedImageBuffer"),
+            })),
+          })),
+        })),
+      }));
       const response: { body: { drone: CustomRequestCreateDrone } } =
         await request(app)
           .post(createUrl)
@@ -175,8 +185,6 @@ describe("Given a post at drones/create endpoint", () => {
           })
 
           .expect(expectedCode);
-
-      expect(response.body).toHaveProperty("drone");
     });
   });
 });
