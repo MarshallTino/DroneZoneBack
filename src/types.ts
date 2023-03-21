@@ -116,6 +116,9 @@ export interface CustomRequestCreateDrone extends CustomRequest {
   ];
 }
 
+export interface CreateDroneSharp extends CustomRequest {
+  files: Express.Multer.File[];
+}
 export interface DroneStructure extends DroneStructureCreate {
   id: string;
 }
