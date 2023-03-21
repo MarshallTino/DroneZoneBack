@@ -4,6 +4,7 @@ import crypto from "crypto";
 import {
   createDrone,
   deleteDrone,
+  getDroneById,
   getDrones,
   getUserDrones,
 } from "../../controllers/dronesController/dronesController.js";
@@ -33,6 +34,7 @@ const upload = multer({
 dronesRouter.get("/", getDrones);
 dronesRouter.get("/user-drones", auth, getUserDrones);
 dronesRouter.delete("/delete/:droneId", auth, deleteDrone);
+dronesRouter.get("/detailDrone/:droneId", auth, getDroneById);
 dronesRouter.post(
   "/create-drone",
   auth,

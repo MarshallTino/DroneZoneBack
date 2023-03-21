@@ -10,6 +10,7 @@ import {
 import {
   createDrone,
   deleteDrone,
+  getDroneById,
   getDrones,
   getUserDrones,
 } from "./dronesController";
@@ -206,6 +207,54 @@ describe("Given a createDrone controller", () => {
       await createDrone(req as CustomRequestCreateDrone, res as Response, next);
 
       expect(next).toHaveBeenCalledWith(expectedCustomError);
+    });
+  });
+});
+
+describe("Given a getGameById controller", () => {
+  const req: Partial<CustomRequest> = {
+    params: { droneId: mockDrones[0].id },
+  };
+
+  describe("When it receives a request with a drone id and the user is authorized", () => {
+    test("Then it should call its status method with 200 and json method with the drone", async () => {
+      Drone.findById = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockReturnValue(mockDrones[0]),
+      }));
+
+      await getDroneById(req as CustomRequest, res as Response, next);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ drone: mockDrones[0] });
+    });
+  });
+
+  describe("When it receives a request with a drone id and the user is authorized, but there is no drone in the database", () => {
+    test("Then it should call next with 404 status code and an error", async () => {
+      const customError = new CustomError(
+        "Drone not found",
+        404,
+        "Drone not found"
+      );
+      Drone.findById = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockResolvedValue(undefined),
+      }));
+
+      await getDroneById(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalledWith(customError);
+    });
+  });
+
+  describe("When it receives a request with a drone id and the user is authorized, but the database throws an error", () => {
+    test("Then it should call next with 500 status code and an error", async () => {
+      Drone.findById = jest.fn().mockImplementationOnce(() => ({
+        exec: jest.fn().mockRejectedValue(new Error("")),
+      }));
+
+      await getDroneById(req as CustomRequest, res as Response, next);
+
+      expect(next).toHaveBeenCalled();
     });
   });
 });
