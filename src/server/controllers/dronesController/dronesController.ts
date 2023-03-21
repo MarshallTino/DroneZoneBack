@@ -164,3 +164,36 @@ export const createDrone = async (
     next(customError);
   }
 };
+
+export const getDroneById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { droneId } = req.params;
+    const drone = await Drone.findById(droneId).exec();
+
+    if (!drone) {
+      const customError = new CustomError(
+        "Drone not found",
+        400,
+        "Drone not found"
+      );
+
+      next(customError);
+
+      return;
+    }
+
+    res.status(200).json({ drone });
+  } catch (error: unknown) {
+    const customError = new CustomError(
+      (error as Error).message,
+      400,
+      "Something went wrong"
+    );
+
+    next(customError);
+  }
+};
