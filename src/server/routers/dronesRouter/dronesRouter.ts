@@ -8,7 +8,8 @@ import {
   getUserDrones,
 } from "../../controllers/dronesController/dronesController.js";
 import auth from "../../middlewares/auth/auth.js";
-import supaBase from "../../middlewares/supaBase/supaBase.js";
+import supaBase from "../../middlewares/imageUpload/imageUpload.js";
+import optimizing from "../../middlewares/imageoptimizing/imageOptimizing.js";
 
 const dronesRouter = Router();
 
@@ -32,6 +33,13 @@ const upload = multer({
 dronesRouter.get("/", getDrones);
 dronesRouter.get("/user-drones", auth, getUserDrones);
 dronesRouter.delete("/delete/:droneId", auth, deleteDrone);
-dronesRouter.post("/create-drone", auth, upload.any(), supaBase, createDrone);
+dronesRouter.post(
+  "/create-drone",
+  auth,
+  upload.any(),
+  optimizing,
+  supaBase,
+  createDrone
+);
 
 export default dronesRouter;

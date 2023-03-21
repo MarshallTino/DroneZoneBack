@@ -43,8 +43,8 @@ const supaBase = async (
     const uploadedFileUrls = await uploadFiles(req.files);
     const droneImages: DroneImages = {};
 
-    files.forEach((file, i) => {
-      droneImages[file.fieldname] = uploadedFileUrls[i].publicUrl;
+    files.forEach((file, index) => {
+      droneImages[file.fieldname] = uploadedFileUrls[index].publicUrl;
     });
 
     req.body.droneImage = droneImages.droneImage;

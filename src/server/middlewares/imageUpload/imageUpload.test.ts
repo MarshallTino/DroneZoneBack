@@ -5,37 +5,43 @@ import {
   type CustomRequest,
   type CustomRequestCreateDrone,
 } from "../../../types";
-import supaBase, { supabase } from "./supaBase";
+import supaBase, { supabase } from "./imageUpload";
 
 afterEach(async () => {
   jest.clearAllMocks();
 });
 
-const droneImage: Partial<Express.Multer.File> = { filename: "droneImage.jpg" };
+const droneImage: Partial<Express.Multer.File> = {
+  filename: "droneImage.webp",
+};
 const schemaImage: Partial<Express.Multer.File> = {
-  filename: "schemaImage.jpg",
+  filename: "schemaImage.webp",
 };
-const motorImage: Partial<Express.Multer.File> = { filename: "motorImage.jpg" };
-const frameImage: Partial<Express.Multer.File> = { filename: "frameImage.jpg" };
-const escImage: Partial<Express.Multer.File> = { filename: "escImage.jpg" };
+const motorImage: Partial<Express.Multer.File> = {
+  filename: "motorImage.webp",
+};
+const frameImage: Partial<Express.Multer.File> = {
+  filename: "frameImage.webp",
+};
+const escImage: Partial<Express.Multer.File> = { filename: "escImage.webp" };
 const cameraImage: Partial<Express.Multer.File> = {
-  filename: "cameraImage.jpg",
+  filename: "cameraImage.webp",
 };
-const vtxImage: Partial<Express.Multer.File> = { filename: "vtxImage.jpg" };
+const vtxImage: Partial<Express.Multer.File> = { filename: "vtxImage.webp" };
 const propellerImage: Partial<Express.Multer.File> = {
-  filename: "propellerImage.jpg",
+  filename: "propellerImage.webp",
 };
 const controllerImage: Partial<Express.Multer.File> = {
-  filename: "controllerImage.jpg",
+  filename: "controllerImage.webp",
 };
 const batteryImage: Partial<Express.Multer.File> = {
-  filename: "batteryImage.jpg",
+  filename: "batteryImage.webp",
 };
 const vtxAntennaImage: Partial<Express.Multer.File> = {
-  filename: "vtxAntennaImage.jpg",
+  filename: "vtxAntennaImage.webp",
 };
 const receiverImage: Partial<Express.Multer.File> = {
-  filename: "receiverImage.jpg",
+  filename: "receiverImage.webp",
 };
 
 const files = [
@@ -63,7 +69,7 @@ const req: Partial<CustomRequest> = {
 const res: Partial<Response> = {};
 const next: NextFunction = jest.fn();
 
-const mockImagePath = "droneImages/droneImage.jpg";
+const mockImagePath = "droneImages/droneImage.webp";
 
 describe("Given a supaBase middleware function", () => {
   describe("When it receives a request with a 12 files", () => {
