@@ -6,6 +6,7 @@ export const mockDrones: DroneStructure[] = [
     droneImage: "https://example.com/drone-image.jpg",
     schemaImage: "https://example.com/drone-schema.jpg",
     creator: "640e06232ed91d22dbe61b76",
+    creatorName: "crea",
     categories: {
       difficulty: "Intermediate",
       transmissionType: "Digital",
@@ -84,6 +85,7 @@ export const mockDroneCreate = {
   droneImage: "ddddd",
   schemaImage: "ddddd",
   creator: "ddddd",
+  creatorName: "patata",
   difficulty: "ddddd",
   transmissionType: "ddddd",
   droneClass: "ddddd",

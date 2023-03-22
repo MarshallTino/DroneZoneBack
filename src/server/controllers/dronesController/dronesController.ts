@@ -81,6 +81,7 @@ export const createDrone = async (
       droneImage: requestBody.droneImage,
       schemaImage: requestBody.schemaImage,
       creator: req.creator!,
+      creatorName: requestBody.creatorName,
       categories: {
         difficulty: requestBody.difficulty,
         droneClass: requestBody.droneClass,
