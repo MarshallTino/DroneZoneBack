@@ -18,7 +18,7 @@ const optimizing = async (
           path.extname(originalname)
         )}`;
         await sharp(path.join("droneImages", filename))
-          .resize(350, 200, { fit: "cover" })
+          .resize(300, 300, { fit: "cover" })
           .webp({ quality: 100 })
           .toFormat("webp")
           .toFile(path.join("droneImages", `${filename}.webp`));

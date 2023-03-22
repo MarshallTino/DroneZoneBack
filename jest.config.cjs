@@ -8,7 +8,7 @@ module.exports = {
     "src/**/*.ts",
     "!src/index.ts",
     "!src/server/startServer.ts",
-    "!src/database/connectDataBase.ts",
+    "!src/database/connectDatabase.ts",
   ],
   coverageDirectory: "coverage/integration",
 };
