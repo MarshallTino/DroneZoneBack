@@ -26,7 +26,8 @@ const supaBase = async (
         .from("drones")
         .upload(
           file.filename,
-          await fs.readFile(path.join("droneImages", file.filename))
+          await fs.readFile(path.join("droneImages", file.filename)),
+          { cacheControl: "31536000", upsert: false }
         );
       const { data: publicUrl } = supabase.storage
         .from("drones")
