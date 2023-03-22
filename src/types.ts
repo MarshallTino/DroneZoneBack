@@ -28,6 +28,7 @@ export interface DroneStructureCreate {
   droneImage: string;
   schemaImage: string;
   creator: string;
+  creatorName: string;
   categories: {
     difficulty: string;
     transmissionType: string;
@@ -52,6 +53,7 @@ export interface CustomRequestCreateDrone extends CustomRequest {
     droneImage: string;
     schemaImage: string;
     creator: string;
+    creatorName: string;
     difficulty: string;
     transmissionType: string;
     droneClass: string;
